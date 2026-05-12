@@ -22,3 +22,7 @@ A simple Hangman game built with React and TypeScript. Guess the hidden word bef
 ```bash
 npm install
 npm run dev
+
+## 🚀 Live Demo
+
+Try it here 👉 [Play Hangman](https://hangman-wheat-eight.vercel.app/)
