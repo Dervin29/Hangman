@@ -41,52 +41,43 @@ const Keyboard = ({
   addGuessedLetter,
 }: KeyboardProps) => {
   return (
-    <div className="w-full grid grid-cols-7 sm:grid-cols-9 gap-3">
+    <div
+      className="grid w-full select-none grid-cols-7 gap-1.5 sm:gap-2 lg:grid-cols-9 lg:gap-2.5"
+      role="group"
+      aria-label="Letter keys"
+    >
       {KEYS.map((key) => {
         const isActive = activeLetters.includes(key);
         const isInactive = inactiveLetters.includes(key);
+        const state = isActive ? "active" : isInactive ? "inactive" : "idle";
 
         return (
           <button
             key={key}
+            type="button"
+            aria-label={`Letter ${key}`}
+            aria-pressed={isActive}
             onClick={() => addGuessedLetter(key)}
             disabled={isActive || isInactive || disabled}
-            className={`
-              aspect-square rounded-xl text-xl font-bold uppercase
-              border-2 transition-all duration-200
-              flex items-center justify-center
-              shadow-sm
-
-              ${
-                isActive
-                  ? "bg-emerald-500 border-emerald-500 text-white shadow-md scale-95"
-                  : ""
-              }
-
-              ${
-                isInactive
-                  ? "bg-slate-200 border-slate-200 text-slate-400 opacity-60"
-                  : ""
-              }
-
-              ${
-                !isActive && !isInactive
-                  ? `
-                    bg-white border-slate-300 text-slate-700
-                    hover:bg-slate-100
-                    hover:border-slate-400
-                    hover:-translate-y-0.5
-                    active:scale-95
-                  `
-                  : ""
-              }
-
-              ${
-                disabled
-                  ? "cursor-not-allowed"
-                  : "cursor-pointer"
-              }
-            `}
+            className={[
+              "aspect-square border-2 font-mono text-base font-bold uppercase",
+              "flex items-center justify-center",
+              "transition-colors duration-150",
+              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hazard",
+              "sm:text-lg lg:text-xl",
+              state === "active"
+                ? "border-phosphor bg-phosphor text-crt"
+                : "",
+              state === "inactive"
+                ? "border-hazard/60 text-hazard/60 line-through"
+                : "",
+              state === "idle"
+                ? "border-phosphor/60 text-phosphor hover:bg-phosphor/10"
+                : "",
+              disabled
+                ? "cursor-not-allowed opacity-40"
+                : "cursor-pointer",
+            ].join(" ")}
           >
             {key}
           </button>
